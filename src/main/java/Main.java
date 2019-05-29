@@ -78,6 +78,8 @@ public class Main {
             sslConnector.setPort(Integer.valueOf(sslPort));
             sslConnector.setKeyPassword("123456");
             sslConnector.setKeystore("keystore");
+            
+            System.out.println(sslConnector.toString());
 
             server.setConnectors(new Connector[] { sslConnector, connector });
             WebAppContext root = new WebAppContext();
