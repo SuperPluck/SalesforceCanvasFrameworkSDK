@@ -37,13 +37,15 @@
             console.log(sr);
             // Save the token
             Sfdc.canvas.oauth.token(sr.oauthToken);
-            Sfdc.canvas.byId('username').innerHTML = JSON.stringify(sr, null, 4);
+            Sfdc.canvas.byId('username').innerHTML = sr.context.user.fullName;
+            Sfdc.canvas.byId('payload').innerHTML = JSON.stringify(sr, null, 4);
         });
 
     </script>
 </head>
 <body>
-    <br/>
+
     <h1>Hello <span id='username'></span></h1>
+    <pre id="payload"></pre>
 </body>
 </html>

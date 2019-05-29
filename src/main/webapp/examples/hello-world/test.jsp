@@ -2,9 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
 
-    <title>Hello World Canvas Example</title>
-
-    <link rel="stylesheet" type="text/css" href="/sdk/css/canvas.css" />
+    <title>Hello World Canvas Test</title>
 
     <!-- Include all the canvas JS dependencies in one file -->
     <script type="text/javascript" src="/sdk/js/canvas-all.js"></script>
@@ -14,18 +12,18 @@
     <script>
         function callback(msg) {
             if (msg.status !== 200) {
-               alert("Error: " + msg.status);
-               return;
+                alert("Error: " + msg.status);
+                return;
             }
             alert("Payload: ", msg.payload);
-         }
-                     
-         var client = Sfdc.canvas.oauth.client();
-         var ctxButton = Sfdc.canvas.byId("ctxButton");
-         ctxButton.onclick=function() {
-            Sfdc.canvas.client.ctx(callback, client)};
+        }
+
+        var client = Sfdc.canvas.oauth.client();
+        var ctxButton = Sfdc.canvas.byId("ctxButton");
+        ctxButton.onclick = function () {
+            Sfdc.canvas.client.ctx(callback, client);
             return false;
-         }
+        };
 
     </script>
 </head>
@@ -34,6 +32,6 @@
     <h1>Hello <span id='username'>Tester</span></h1>
 
     <p><button id="ctxButton">Get Context</button></p>
-    <p><a href="./test.jsp">Go to another page</a></p>
+    <p><a href="./index.jsp">Go to another page</a></p>
 </body>
 </html>
