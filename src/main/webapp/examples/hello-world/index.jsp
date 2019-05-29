@@ -5,7 +5,7 @@
     Map<String, String[]> parameters = request.getParameterMap();
     String[] signedRequest = parameters.get("signed_request");
     if (signedRequest == null) {%>
-        This App must be invoked via a signed request!
+        This App must be invoked via a signed request!<%
         return;
     }
     String yourConsumerSecret=System.getenv("CANVAS_CONSUMER_SECRET");
@@ -27,10 +27,6 @@
     <script type="text/javascript" src="/scripts/json2.js"></script>
 
     <script>
-        if (self === top) {
-            // Not in Iframe
-            alert("This canvas app must be included within an iframe");
-        }
 
         Sfdc.canvas(function() {
             var sr = JSON.parse('<%=signedRequestJson%>');
