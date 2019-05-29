@@ -5,7 +5,7 @@
     Map<String, String[]> parameters = request.getParameterMap();
     String[] signedRequest = parameters.get("signed_request");
     if (signedRequest == null) {%>
-        This App must be invoked via a signed request!<%
+        This App must be invoked via a signed request!
         return;
     }
     String yourConsumerSecret=System.getenv("CANVAS_CONSUMER_SECRET");
@@ -37,7 +37,7 @@
             console.log(sr);
             // Save the token
             Sfdc.canvas.oauth.token(sr.oauthToken);
-            Sfdc.canvas.byId('username').innerHTML = JSON.stringify(sr);
+            Sfdc.canvas.byId('username').innerHTML = JSON.stringify(sr, null, 4);
         });
 
     </script>
