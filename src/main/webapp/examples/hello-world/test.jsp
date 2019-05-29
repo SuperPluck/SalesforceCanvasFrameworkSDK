@@ -18,20 +18,16 @@
             alert("Payload: ", msg.payload);
         }
 
-        var client = Sfdc.canvas.oauth.client();
-        var ctxButton = Sfdc.canvas.byId("ctxButton");
-        ctxButton.onclick = function () {
-            Sfdc.canvas.client.ctx(callback, client);
-            return false;
-        };
-
+        function getContext(){
+            Sfdc.canvas.client.ctx(callback, Sfdc.canvas.oauth.client());
+        }
     </script>
 </head>
 <body>
     <br/>
     <h1>Hello <span id='username'>Tester</span></h1>
 
-    <p><button id="ctxButton">Get Context</button></p>
+    <p><button id="ctxButton" onclick="getContext(); return false;">Get Context</button></p>
     <p><a href="./index.jsp">Go to another page</a></p>
 </body>
 </html>
