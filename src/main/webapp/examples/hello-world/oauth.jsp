@@ -4,7 +4,16 @@
 </head>
 <body>
     <script>
-
+        function callback(msg) {
+            if (msg.status !== 200) {
+                
+                Sfdc.canvas.byId('payload').innerHTML = JSON.stringify(msg, null, 4);
+                return;
+            }
+            
+            Sfdc.canvas.byId('payload').innerHTML = JSON.stringify(msg.payload, null, 4);
+        }
+        
         function loginHandler(e) {
             var uri;
             if (! Sfdc.canvas.oauth.loggedin()) {
@@ -60,5 +69,6 @@
 
     
     <p><button id="ctxButton" onclick="getContext(); return false;">Get Context</button></p>
+    <pre id="payload"></pre>
 </body>
 </html>
