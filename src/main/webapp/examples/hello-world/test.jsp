@@ -24,7 +24,7 @@
             console.log('Calling context');
             
             var client = Sfdc.canvas.oauth.client();
-            console.log('client'+client);
+            console.log('client '+JSON.stringify(client));
             Sfdc.canvas.client.ctx(callback, client);
         }
     </script>

@@ -26,6 +26,14 @@
             return false;
         }
 
+        function getContext(){
+            console.log('Calling context');
+            
+            var client = Sfdc.canvas.oauth.client();
+            console.log('client'+client);
+            Sfdc.canvas.client.ctx(callback, client);
+        }
+
         // Bootstrap the page once the DOM is ready.
         Sfdc.canvas(function() {
             // On Ready...
@@ -49,5 +57,8 @@
     <div>
         <a id="login" href="#">Login</a><br/>
     </div>
+
+    
+    <p><button id="ctxButton" onclick="getContext(); return false;">Get Context</button></p>
 </body>
 </html>
