@@ -4,7 +4,9 @@
     // Pull the signed request out of the request body and verify/decode it.
     Map<String, String[]> parameters = request.getParameterMap();
     String[] signedRequest = parameters.get("signed_request");
-    if (signedRequest == null) {%>
+    if (signedRequest == null) {
+        console.log(JSON.stringify(sr, null, 4));
+        %>
         This App must be invoked via a signed request!<%
         return;
     }
