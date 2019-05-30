@@ -42,6 +42,7 @@
 <body>
 
     <h1>Hello <span id='username'></span></h1>
+    <p><a href="./test.jsp">Go to another page</a></p>
     <pre id="payload"></pre>
 </body>
 </html>
