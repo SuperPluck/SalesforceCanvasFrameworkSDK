@@ -21,7 +21,11 @@
         }
 
         function getContext(){
-            Sfdc.canvas.client.ctx(callback, Sfdc.canvas.oauth.client());
+            console.log('Calling context');
+            
+            var client = Sfdc.canvas.oauth.client();
+            console.log('client'+client);
+            Sfdc.canvas.client.ctx(callback, client);
         }
     </script>
 </head>
