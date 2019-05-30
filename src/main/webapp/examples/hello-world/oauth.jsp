@@ -15,7 +15,7 @@
                             response_type : "token",
                             client_id : "3MVG96_7YM2sI9wQJ_CmTmye8OfLBd9yKjX58UZ1s4iNUiRDXMuOcXmvGY9qWX.ZhYANvaWkWumOiEfdJl.J2",
                             redirect_uri : encodeURIComponent(
-                                "https:/sfdccanvassdk1.herokuapp.com/sdk/callback.html")
+                                "https://sfdccanvassdk1.herokuapp.com/sdk/callback.html")
                         }});
             }
             else {
