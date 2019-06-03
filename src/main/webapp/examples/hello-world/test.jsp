@@ -26,6 +26,8 @@
     <script type="text/javascript" src="/scripts/json2.js"></script>
 
     <script>
+
+        var sr = {};
         function callback(msg) {
             if (msg.status !== 200) {
                 
@@ -40,13 +42,13 @@
             console.log('Calling context');
             
             var client = Sfdc.canvas.oauth.client();
-            console.log('client '+JSON.stringify(client));
-            Sfdc.canvas.client.ctx(callback, client);
+            console.log('client (oauth) - '+JSON.stringify(client));
+            console.log('client (SR) - '+sr.client)
+            Sfdc.canvas.client.ctx(callback, sr.client);
         }
 
         Sfdc.canvas(function() {
-            var sr = JSON.parse('<%=signedRequestJson%>');
-            console.log(sr);
+            sr = JSON.parse('<%=signedRequestJson%>');
             // Save the token
             
             console.log("Checking parameters "+location.search);
