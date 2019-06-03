@@ -17,7 +17,7 @@
         function logIn(){
             console.log('Loggin in');
             var uri = Sfdc.canvas.oauth.loginUrl();
-            Sfdc.canvas.oauth.login(
+            var result = Sfdc.canvas.oauth.login(
                 {uri : uri,
                     params: {
                         response_type : "token",
@@ -25,6 +25,7 @@
                         redirect_uri : encodeURIComponent(
                             "https://sfdccanvassdk2.herokuapp.com/sdk/callback.html")
                     }});
+            Sfdc.canvas.byId('payload').innerHTML = JSON.stringify(result, null, 4);
         }
 
         function loginHandler(e) {
