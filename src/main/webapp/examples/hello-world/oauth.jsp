@@ -14,18 +14,21 @@
             Sfdc.canvas.byId('payload').innerHTML = JSON.stringify(msg.payload, null, 4);
         }
         
+        function logIn(){
+            var uri = Sfdc.canvas.oauth.loginUrl();
+            Sfdc.canvas.oauth.login(
+                {uri : uri,
+                    params: {
+                        response_type : "token",
+                        client_id : "3MVG96_7YM2sI9wQJ_CmTmye8OfLBd9yKjX58UZ1s4iNUiRDXMuOcXmvGY9qWX.ZhYANvaWkWumOiEfdJl.J2",
+                        redirect_uri : encodeURIComponent(
+                            "https://sfdccanvassdk2.herokuapp.com/sdk/callback.html")
+                    }});
+        }
+
         function loginHandler(e) {
-            var uri;
             if (! Sfdc.canvas.oauth.loggedin()) {
-                uri = Sfdc.canvas.oauth.loginUrl();
-                Sfdc.canvas.oauth.login(
-                    {uri : uri,
-                        params: {
-                            response_type : "token",
-                            client_id : "3MVG96_7YM2sI9wQJ_CmTmye8OfLBd9yKjX58UZ1s4iNUiRDXMuOcXmvGY9qWX.ZhYANvaWkWumOiEfdJl.J2",
-                            redirect_uri : encodeURIComponent(
-                                "https://sfdccanvassdk2.herokuapp.com/sdk/callback.html")
-                        }});
+                logIn();
             }
             else {
                 Sfdc.canvas.oauth.logout();
@@ -56,6 +59,8 @@
                  // Only displaying part of the OAuth token for better formatting.
                 Sfdc.canvas.byId("oauth").innerHTML = Sfdc.canvas.oauth.token()
                     .substring(1,40) + "…";
+            }else{
+                logIn();
             }
             login.onclick=loginHandler;
         });
