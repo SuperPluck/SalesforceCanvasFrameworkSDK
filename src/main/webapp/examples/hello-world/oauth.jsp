@@ -39,7 +39,7 @@
             console.log('Calling context');
             
             var client = Sfdc.canvas.oauth.client();
-            console.log('client'+client);
+            console.log('client '+JSON.stringify(client));
             Sfdc.canvas.client.ctx(callback, client);
         }
 
@@ -48,7 +48,9 @@
             // On Ready...
             var login    = Sfdc.canvas.byId("login"),
                 loggedIn = Sfdc.canvas.oauth.loggedin(),
-                token = Sfdc.canvas.oauth.token()
+                token = Sfdc.canvas.oauth.token();
+
+            console.log("Checking parameters "+location.search);
             login.innerHTML = (loggedIn) ? "Logout" : "Login";
             if (loggedIn) {
                  // Only displaying part of the OAuth token for better formatting.

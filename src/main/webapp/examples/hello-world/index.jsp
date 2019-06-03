@@ -31,6 +31,10 @@
             var sr = JSON.parse('<%=signedRequestJson%>');
             console.log(sr);
             // Save the token
+            
+            console.log("Checking parameters "+location.search);
+            
+
             Sfdc.canvas.oauth.token(sr.oauthToken);
             Sfdc.canvas.byId('username').innerHTML = sr.context.user.fullName;
             Sfdc.canvas.byId('payload').innerHTML = JSON.stringify(sr, null, 4);
