@@ -31,10 +31,8 @@
 
         function getContext(){
             console.info('Calling context');
+            console.log('client (SR) - '+JSON.stringify(sr.client));
             
-            var client = Sfdc.canvas.oauth.client();
-            console.log('client (oauth) - '+JSON.stringify(client));
-            console.log('client (SR) - '+sr.client)
             Sfdc.canvas.client.ctx(callback, sr.client);
         }
 
