@@ -17,7 +17,7 @@
         function logIn(){
             console.log('Loggin in');
             var uri = Sfdc.canvas.oauth.loginUrl();
-            var result = Sfdc.canvas.oauth.login(
+            Sfdc.canvas.oauth.login(
                 {uri : uri,
                     params: {
                         response_type : "token",
@@ -25,7 +25,6 @@
                         redirect_uri : encodeURIComponent(
                             "https://sfdccanvassdk2.herokuapp.com/sdk/callback.html")
                     }});
-            Sfdc.canvas.byId('payload').innerHTML = JSON.stringify(result, null, 4);
         }
 
         function loginHandler(e) {
@@ -55,12 +54,10 @@
                 loggedIn = Sfdc.canvas.oauth.loggedin(),
                 token = Sfdc.canvas.oauth.token();
 
-            console.log("Checking parameters "+location.search);
             login.innerHTML = (loggedIn) ? "Logout" : "Login";
             if (loggedIn) {
                  // Only displaying part of the OAuth token for better formatting.
-                Sfdc.canvas.byId("oauth").innerHTML = Sfdc.canvas.oauth.token()
-                    .substring(1,40) + "…";
+                Sfdc.canvas.byId("oauth").innerHTML = Sfdc.canvas.oauth.token();
             }else{
                 logIn();
             }

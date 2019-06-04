@@ -1,19 +1,3 @@
-<%@ page import="canvas.SignedRequest" %>
-<%@ page import="java.util.Map" %>
-<%
-    // Pull the signed request out of the request body and verify/decode it.
-    Map<String, String[]> parameters = request.getParameterMap();
-    String[] signedRequest = parameters.get("signed_request");
-    System.out.println(parameters.toString());
-    if (signedRequest == null) {%>
-        This App must be invoked via a signed request!<%
-        return;
-    }
-    String yourConsumerSecret=System.getenv("CANVAS_CONSUMER_SECRET");
-    //String yourConsumerSecret="1818663124211010887";
-    String signedRequestJson = SignedRequest.verifyAndDecodeAsJson(signedRequest[0], yourConsumerSecret);
-%>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
@@ -28,18 +12,25 @@
     <script>
 
         var sr = {};
+
+        function showOnPage(obj){
+            Sfdc.canvas.byId('payload').innerHTML = JSON.stringify(obj, null, 4);
+        }
+
         function callback(msg) {
-            if (msg.status !== 200) {
-                
-                Sfdc.canvas.byId('payload').innerHTML = JSON.stringify(msg, null, 4);
-                return;
-            }
+            console.info('Callback from getting context');
+
+            var obj = {};
+            if (msg.status !== 200){
+                obj = msg;
+                Sfdc.canvas.byId('username').innerHTML = sr.context.user.fullName;
+            }else obj = msg.payload;
             
-            Sfdc.canvas.byId('payload').innerHTML = JSON.stringify(msg.payload, null, 4);
+            showOnPage(obj);
         }
 
         function getContext(){
-            console.log('Calling context');
+            console.info('Calling context');
             
             var client = Sfdc.canvas.oauth.client();
             console.log('client (oauth) - '+JSON.stringify(client));
@@ -47,16 +38,26 @@
             Sfdc.canvas.client.ctx(callback, sr.client);
         }
 
-        Sfdc.canvas(function() {
-            sr = JSON.parse('<%=signedRequestJson%>');
-            // Save the token
-            
-            console.log("Checking parameters "+location.search);
-            
+        function refresh(){
+            Sfdc.canvas.client.refreshSignedRequest(function(data) {
+                
+                console.info('callback from refresh');
+                if (data.status === 200) {
+                    var signedRequest =  data.payload.response;
+                    var part = signedRequest.split('.')[1];
+                    sr = JSON.parse(Sfdc.canvas.decode(part));
+                    Sfdc.canvas.byId('username').innerHTML = sr.context.user.fullName;
+                    showOnPage(sr);
+                }else{
+                    showOnPage(data);
+                }
+            });
+        }
 
-            Sfdc.canvas.oauth.token(sr.oauthToken);
-            Sfdc.canvas.byId('username').innerHTML = sr.context.user.fullName;
-            Sfdc.canvas.byId('payload').innerHTML = JSON.stringify(sr, null, 4);
+        Sfdc.canvas(function() {
+            //refresh signed request, lost in the redirects
+            console.info('Finished loading, calling refresh');
+            refresh();
         });
 
     </script>
@@ -65,6 +66,7 @@
     <br/>
     <h1>Hello <span id='username'>Tester</span></h1>
 
+    <p><button id="refButton" onclick="refresh(); return false;">Refresh</button></p>
     <p><button id="ctxButton" onclick="getContext(); return false;">Get Context</button></p>
     <p><button id="repost" onclick="Sfdc.canvas.client.repost();">Repost</button></p>
     <p><a href="./index.jsp">Go to another page</a></p>
