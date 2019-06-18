@@ -79,7 +79,8 @@
                     </tr>
                 </thead>
                 <tbody>
-	    <%				
+		<%	
+			out.println("<tr><td>NameId</td><td><li>" + nameId + "</li></td></tr>");			
             Collection<String> keys = attributes.keySet();
             for(String name :keys){
                 out.println("<tr><td>" + name + "</td><td>");
